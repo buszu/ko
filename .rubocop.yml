@@ -1,0 +1,24 @@
+AllCops:
+  DisplayCopNames: true
+  ExtraDetails: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7.2
+  Exclude:
+    - bin/bundle
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+
+Style/RescueStandardError:
+  EnforcedStyle: implicit
