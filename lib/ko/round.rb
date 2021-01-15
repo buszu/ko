@@ -51,6 +51,7 @@ module Ko
       won ? next_won : next_lost
     end
 
+    # rubocop:disable Metrics/AbcSize
     def matches_count
       return 1 if final?
 
@@ -61,6 +62,7 @@ module Ko
         tournament.size / 2**(modified_number - 1) / 2
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 

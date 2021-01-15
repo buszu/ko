@@ -4,6 +4,10 @@ require 'ko/tournament'
 
 module Ko
   class TournamentFactory
+    def self.tournament(...)
+      new.build(...)
+    end
+
     def build(...)
       tournament = Tournament.new(...)
 
