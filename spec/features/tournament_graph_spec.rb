@@ -101,4 +101,36 @@ RSpec.describe 'Tournament Graph Specification' do
       end
     end
   end
+
+  describe 'matches' do
+    context 'in 4 competitors tree' do
+      let(:tournament) { Ko::TournamentFactory.tournament(size: 2) }
+
+      it 'have proper paths' do
+        expected_paths = {
+          '2.l2.1' => { next_won: '2.w3.1', next_lost: '' },
+          '2.l1.1' => { next_won: '2.l2.1', next_lost: '' },
+          '2.w1.1' => { next_won: '2.w2.1', next_lost: '2.l1.1' },
+          '2.w1.2' => { next_won: '2.w2.1', next_lost: '2.l1.1' },
+          '2.w2.1' => { next_won: '2.w3.1', next_lost: '2.l2.1' },
+          '2.w3.1' => { next_won: '', next_lost: '' }
+        }
+
+        paths = tournament.rounds.values.flat_map do |round|
+          round.matches.values.map do |match|
+            x = match
+            [
+              match.to_s,
+              {
+                next_won: match.next.to_s,
+                next_lost: match.next(won: false).to_s
+              }
+            ]
+          end
+        end.to_h
+
+        expect(paths).to eq(expected_paths)
+      end
+    end
+  end
 end

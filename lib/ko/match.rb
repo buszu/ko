@@ -21,18 +21,24 @@ module Ko
     private
 
     def next_won
+      return round.tournament.final.matches[1] if round.left_final?
+      return if round.final?
+
       round.next.matches[next_number]
     end
 
     def next_lost
-      next_number =
+      return if round.loosers?
+      return if round.final?
+
+      the_next_number =
         if round.initial?
           next_number
         else
           round.matches_count - number + 1
         end
 
-      round.next(won: false).matches[next_number]
+      round.next(won: false).matches[the_next_number]
     end
 
     def next_number

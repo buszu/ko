@@ -67,13 +67,14 @@ module Ko
     private
 
     def next_won
+      return tournament.rounds["#{SPECIAL_TYPES[:loosers_winner]}0"] if left_final?
       return tournament.rounds["#{SPECIAL_TYPES[:winner]}0"] if final?
 
       tournament.rounds["#{type}#{number.next}"]
     end
 
     def next_lost
-      return unless winners?
+      return if loosers?
 
       tournament.rounds["#{LEFT_SIDE_IDENTIFIER}#{next_lost_number}"]
     end
