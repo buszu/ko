@@ -7,7 +7,7 @@ module Ko
     INITIAL_ROUND_NAME = "#{RIGHT_SIDE_IDENTIFIER}1"
     SPECIAL_TYPES = {
       loosers_winner: 'lw',
-      winner: 'ww'
+      winner: 'fw'
     }.freeze
 
     attr_reader :tournament, :type, :number, :matches
@@ -35,9 +35,13 @@ module Ko
       name == INITIAL_ROUND_NAME
     end
 
-    # def loosers_final?
-    #   type == SPECIAL_TYPES[:loosers_final]
-    # end
+    def left_final?
+      self == tournament.left_final
+    end
+
+    def final?
+      self == tournament.final
+    end
 
     def name
       "#{type}#{number}"
@@ -48,20 +52,28 @@ module Ko
     end
 
     def matches_count
-      modified_number = winners? ? number : (number.to_f / 2).ceil
-      tournament.size / 2**(modified_number - 1)
+      return 1 if final?
+
+      if winners?
+        tournament.size / 2**(number - 1)
+      else
+        modified_number = (number.to_f / 2).ceil
+        tournament.size / 2**(modified_number - 1) / 2
+      end
     end
 
     private
 
     def next_won
+      return tournament.rounds["#{SPECIAL_TYPES[:winner]}0"] if final?
+
       tournament.rounds["#{type}#{number.next}"]
     end
 
     def next_lost
       return unless winners?
 
-      tournament.rounds["#{type}#{next_lost_number}"]
+      tournament.rounds["#{LEFT_SIDE_IDENTIFIER}#{next_lost_number}"]
     end
 
     def next_lost_number

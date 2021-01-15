@@ -26,28 +26,26 @@ module Ko
     # rubocop:todo Metrics/MethodLength
     def generate_loosers_rounds(tournament)
       rounds = []
-      i = tournament.size
-      round_matches_count = i / 2
+      round_matches_count = tournament.size / 2
       round_number = 1
 
-      while i > 1
+      while round_matches_count >= 1
         round = Round.new(type: Round::LEFT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
-        generate_round_matches(round) if round_matches_count >= 1
+        generate_round_matches(round)
         tournament.rounds[round.name] = round
         rounds << round
         round_number += 1
 
         round = Round.new(type: Round::LEFT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
-        if round_matches_count >= 1
-          generate_round_matches(round)
-          round_matches_count /= 2
-        end
+        generate_round_matches(round)
         tournament.rounds[round.name] = round
         rounds << round
         round_number += 1
 
-        i /= 2
+        round_matches_count /= 2
       end
+
+      tournament.left_final = rounds.last
 
       loosers_winner = Round.new(type: Round::SPECIAL_TYPES[:loosers_winner], number: 0, tournament: tournament)
       tournament.rounds[loosers_winner.name] = loosers_winner
@@ -78,6 +76,7 @@ module Ko
       end
 
       final = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
+      tournament.final = final
       generate_round_matches(final)
       tournament.rounds[final.name] = final
       rounds << final
