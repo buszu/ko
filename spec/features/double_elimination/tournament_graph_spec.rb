@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Tournament Graph Specification' do
+RSpec.describe '2KO Tournament Graph Specification' do
   describe 'rounds' do
     context 'in 4 competitors tree' do
-      let(:tournament) { Ko::TournamentFactory.tournament(size: 2) }
+      let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 2) }
 
       it 'are generated as expected' do
         expected_rounds = %w[lw0 l2 l1 w1 w2 w3 fw0]
@@ -33,7 +33,7 @@ RSpec.describe 'Tournament Graph Specification' do
     end
 
     context 'in 8 competitors tree' do
-      let(:tournament) { Ko::TournamentFactory.tournament(size: 4) }
+      let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 4) }
 
       it 'are generated as expected' do
         expected_rounds = %w[lw0 l4 l3 l2 l1 w1 w2 w3 w4 fw0]
@@ -66,7 +66,7 @@ RSpec.describe 'Tournament Graph Specification' do
     end
 
     context 'in 16 competitors tree' do
-      let(:tournament) { Ko::TournamentFactory.tournament(size: 8) }
+      let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 8) }
 
       it 'are generated as expected' do
         expected_rounds = %w[lw0 l6 l5 l4 l3 l2 l1 w1 w2 w3 w4 w5 fw0]
@@ -104,7 +104,7 @@ RSpec.describe 'Tournament Graph Specification' do
 
   describe 'matches' do
     context 'in 4 competitors tree' do
-      let(:tournament) { Ko::TournamentFactory.tournament(size: 2) }
+      let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 2) }
 
       it 'have proper paths' do
         expected_paths = {
@@ -118,7 +118,6 @@ RSpec.describe 'Tournament Graph Specification' do
 
         paths = tournament.rounds.values.flat_map do |round|
           round.matches.values.map do |match|
-            x = match
             [
               match.to_s,
               {
@@ -134,7 +133,7 @@ RSpec.describe 'Tournament Graph Specification' do
     end
 
     context 'in 8 competitors tree' do
-      let(:tournament) { Ko::TournamentFactory.tournament(size: 4) }
+      let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 4) }
 
       it 'have proper paths' do
         expected_paths = {
@@ -156,7 +155,6 @@ RSpec.describe 'Tournament Graph Specification' do
 
         paths = tournament.rounds.values.flat_map do |round|
           round.matches.values.map do |match|
-            x = match
             [
               match.to_s,
               {
@@ -172,7 +170,7 @@ RSpec.describe 'Tournament Graph Specification' do
     end
 
     context 'in 16 competitors tree' do
-      let(:tournament) { Ko::TournamentFactory.tournament(size: 8) }
+      let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 8) }
 
       it 'have proper paths' do
         expected_paths = {
@@ -210,7 +208,6 @@ RSpec.describe 'Tournament Graph Specification' do
 
         paths = tournament.rounds.values.flat_map do |round|
           round.matches.values.map do |match|
-            x = match
             [
               match.to_s,
               {
