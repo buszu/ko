@@ -16,6 +16,13 @@ module Ko
         @final = nil
         @left_final = nil
       end
+
+      def matches_queue
+        sorted_round_keys = rounds.sorted_keys(:running)
+        sorted_round_keys.flat_map do |key|
+          rounds[key].matches.values.sort_by(&:number)
+        end
+      end
     end
   end
 end
