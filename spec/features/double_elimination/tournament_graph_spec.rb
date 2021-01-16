@@ -6,21 +6,19 @@ RSpec.describe '2KO Tournament Graph Specification' do
       let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 2) }
 
       it 'are generated as expected' do
-        expected_rounds = %w[lw0 l2 l1 w1 w2 w3 fw0]
-        round_names = tournament.rounds.map { |_, round| round.name }
+        expected_rounds = %w[l2 l1 w1 w2 w3]
+        round_keys = tournament.rounds.map { |_, round| round.key }
 
-        expect(round_names.sort).to eq(expected_rounds.sort)
+        expect(round_keys.sort).to eq(expected_rounds.sort)
       end
 
       it 'have got expected matches' do
         expected_matches = {
-          'lw0' => [],
           'l2' => %w[2.l2.1],
           'l1' => %w[2.l1.1],
           'w1' => %w[2.w1.1 2.w1.2],
           'w2' => %w[2.w2.1],
-          'w3' => %w[2.w3.1],
-          'fw0' => []
+          'w3' => %w[2.w3.1]
         }
 
         expected_matches.each do |round_name, expected|
@@ -36,15 +34,14 @@ RSpec.describe '2KO Tournament Graph Specification' do
       let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 4) }
 
       it 'are generated as expected' do
-        expected_rounds = %w[lw0 l4 l3 l2 l1 w1 w2 w3 w4 fw0]
-        round_names = tournament.rounds.map { |_, round| round.name }
+        expected_rounds = %w[l4 l3 l2 l1 w1 w2 w3 w4]
+        round_keys = tournament.rounds.map { |_, round| round.key }
 
-        expect(round_names.sort).to eq(expected_rounds.sort)
+        expect(round_keys.sort).to eq(expected_rounds.sort)
       end
 
       it 'have got expected matches' do
         expected_matches = {
-          'lw0' => [],
           'l4' => %w[4.l4.1],
           'l3' => %w[4.l3.1],
           'l2' => %w[4.l2.1 4.l2.2],
@@ -52,8 +49,7 @@ RSpec.describe '2KO Tournament Graph Specification' do
           'w1' => %w[4.w1.1 4.w1.2 4.w1.3 4.w1.4],
           'w2' => %w[4.w2.1 4.w2.2],
           'w3' => %w[4.w3.1],
-          'w4' => %w[4.w4.1],
-          'fw0' => []
+          'w4' => %w[4.w4.1]
         }
 
         expected_matches.each do |round_name, expected|
@@ -69,15 +65,14 @@ RSpec.describe '2KO Tournament Graph Specification' do
       let(:tournament) { Ko::DoubleElimination::TournamentFactory.tournament(size: 8) }
 
       it 'are generated as expected' do
-        expected_rounds = %w[lw0 l6 l5 l4 l3 l2 l1 w1 w2 w3 w4 w5 fw0]
-        round_names = tournament.rounds.map { |_, round| round.name }
+        expected_rounds = %w[l6 l5 l4 l3 l2 l1 w1 w2 w3 w4 w5]
+        round_keys = tournament.rounds.map { |_, round| round.key }
 
-        expect(round_names.sort).to eq(expected_rounds.sort)
+        expect(round_keys.sort).to eq(expected_rounds.sort)
       end
 
       it 'have got expected matches' do
         expected_matches = {
-          'lw0' => [],
           'l6' => %w[8.l6.1],
           'l5' => %w[8.l5.1],
           'l4' => %w[8.l4.1 8.l4.2],
@@ -88,8 +83,7 @@ RSpec.describe '2KO Tournament Graph Specification' do
           'w2' => %w[8.w2.1 8.w2.2 8.w2.3 8.w2.4],
           'w3' => %w[8.w3.1 8.w3.2],
           'w4' => %w[8.w4.1],
-          'w5' => %w[8.w5.1],
-          'fw0' => []
+          'w5' => %w[8.w5.1]
         }
 
         expected_matches.each do |round_name, expected|

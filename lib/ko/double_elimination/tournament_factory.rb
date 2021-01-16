@@ -24,10 +24,9 @@ module Ko
       def generate_initial_round(tournament)
         initial_round = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: 1, tournament: tournament)
         generate_round_matches(initial_round)
-        tournament.rounds[initial_round.name] = initial_round
+        tournament.rounds[initial_round.key] = initial_round
       end
 
-      # rubocop:todo Metrics/AbcSize
       # rubocop:todo Metrics/MethodLength
       def generate_loosers_rounds(tournament)
         rounds = []
@@ -35,28 +34,20 @@ module Ko
         round_number = 1
 
         while round_matches_count >= 1
-          round = Round.new(type: Round::LEFT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
-          generate_round_matches(round)
-          tournament.rounds[round.name] = round
-          rounds << round
-          round_number += 1
-
-          round = Round.new(type: Round::LEFT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
-          generate_round_matches(round)
-          tournament.rounds[round.name] = round
-          rounds << round
-          round_number += 1
+          2.times do
+            round = Round.new(type: Round::LEFT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
+            generate_round_matches(round)
+            tournament.rounds[round.key] = round
+            rounds << round
+            round_number += 1
+          end
 
           round_matches_count /= 2
         end
 
         tournament.left_final = rounds.last
-
-        loosers_winner = Round.new(type: Round::SPECIAL_TYPES[:loosers_winner], number: 0, tournament: tournament)
-        tournament.rounds[loosers_winner.name] = loosers_winner
-        rounds << loosers_winner
+        rounds
       end
-      # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
 
       # rubocop:todo Metrics/AbcSize
@@ -73,7 +64,7 @@ module Ko
             generate_round_matches(round)
             round_matches_count /= 2
           end
-          tournament.rounds[round.name] = round
+          tournament.rounds[round.key] = round
           rounds << round
 
           round_number += 1
@@ -83,12 +74,8 @@ module Ko
         final = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
         tournament.final = final
         generate_round_matches(final)
-        tournament.rounds[final.name] = final
+        tournament.rounds[final.key] = final
         rounds << final
-
-        winner = Round.new(type: Round::SPECIAL_TYPES[:winner], number: 0, tournament: tournament)
-        tournament.rounds[winner.name] = winner
-        rounds << winner
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength

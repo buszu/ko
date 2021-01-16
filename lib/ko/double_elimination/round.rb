@@ -5,7 +5,7 @@ module Ko
     class Round
       RIGHT_SIDE_IDENTIFIER = 'w'
       LEFT_SIDE_IDENTIFIER = 'l'
-      INITIAL_ROUND_NAME = "#{RIGHT_SIDE_IDENTIFIER}1"
+      INITIAL_ROUND_KEY = "#{RIGHT_SIDE_IDENTIFIER}1"
       SPECIAL_TYPES = {
         loosers_winner: 'lw',
         winner: 'fw'
@@ -20,31 +20,7 @@ module Ko
         @matches = {}
       end
 
-      def winners?
-        type[0] == RIGHT_SIDE_IDENTIFIER
-      end
-
-      def loosers?
-        type[0] == LEFT_SIDE_IDENTIFIER
-      end
-
-      def loosers_odd?
-        loosers? && number.odd?
-      end
-
-      def initial?
-        name == INITIAL_ROUND_NAME
-      end
-
-      def left_final?
-        self == tournament.left_final
-      end
-
-      def final?
-        self == tournament.final
-      end
-
-      def name
+      def key
         "#{type}#{number}"
       end
 
@@ -64,6 +40,30 @@ module Ko
         end
       end
       # rubocop:enable Metrics/AbcSize
+
+      def winners?
+        type[0] == RIGHT_SIDE_IDENTIFIER
+      end
+
+      def loosers?
+        type[0] == LEFT_SIDE_IDENTIFIER
+      end
+
+      def loosers_odd?
+        loosers? && number.odd?
+      end
+
+      def initial?
+        key == INITIAL_ROUND_KEY
+      end
+
+      def left_final?
+        self == tournament.left_final
+      end
+
+      def final?
+        self == tournament.final
+      end
 
       private
 

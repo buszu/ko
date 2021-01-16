@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'ko/double_elimination/round'
+require 'ko/double_elimination/rounds_map'
 require 'ko/double_elimination/match'
 
 module Ko
@@ -11,7 +12,7 @@ module Ko
 
       def initialize(size:)
         @size = size
-        @rounds = {}
+        @rounds = RoundsMap.new
         @final = nil
         @left_final = nil
       end

@@ -16,7 +16,7 @@ module Ko
 
       def to_s
         tournament = round.tournament
-        "#{tournament.size}.#{round.name}.#{number}"
+        "#{tournament.size}.#{round.key}.#{number}"
       end
 
       private
