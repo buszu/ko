@@ -3,6 +3,7 @@
 require 'ko/double_elimination/round'
 require 'ko/double_elimination/rounds_map'
 require 'ko/double_elimination/match'
+require 'ko/double_elimination/matches_queue'
 
 module Ko
   module DoubleElimination
@@ -68,12 +69,7 @@ module Ko
       end
 
       def matches_queue
-        return @matches_queue if @matches_queue
-
-        sorted_round_keys = rounds.sorted_keys(:running)
-        @matches_queue = sorted_round_keys.flat_map do |key|
-          rounds[key].matches.values.sort_by(&:number)
-        end
+        @matches_queue ||= MatchesQueue.new(self)
       end
     end
   end

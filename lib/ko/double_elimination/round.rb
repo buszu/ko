@@ -64,7 +64,7 @@ module Ko
       private
 
       def next_won
-        return if final || left_final?
+        return if final? || left_final?
 
         tournament.rounds["#{type}#{number.next}"]
       end

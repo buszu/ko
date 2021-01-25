@@ -31,7 +31,7 @@ module Ko
       private
 
       def sorted_keys_for_display
-        return @sorted_keys_for_display if sorted_keys_for_display
+        return @sorted_keys_for_display if @sorted_keys_for_display
 
         comparator = method(:display_sort_comparator)
         @sorted_keys_for_display = keys.sort_by(&comparator)
@@ -46,7 +46,7 @@ module Ko
       # rubocop:todo Metrics/AbcSize
       # rubocop:todo Metrics/MethodLength
       def sorted_keys_for_running
-        return @sorted_keys_for_running if sorted_keys_for_running
+        return @sorted_keys_for_running if @sorted_keys_for_running
 
         rounds_by_type = values.each_with_object(
           {
