@@ -6,10 +6,6 @@ module Ko
       RIGHT_SIDE_IDENTIFIER = 'w'
       LEFT_SIDE_IDENTIFIER = 'l'
       INITIAL_ROUND_KEY = "#{RIGHT_SIDE_IDENTIFIER}1"
-      SPECIAL_TYPES = {
-        loosers_winner: 'lw',
-        winner: 'fw'
-      }.freeze
 
       attr_reader :tournament, :type, :number, :matches
 
@@ -68,8 +64,7 @@ module Ko
       private
 
       def next_won
-        return tournament.rounds["#{SPECIAL_TYPES[:loosers_winner]}0"] if left_final?
-        return tournament.rounds["#{SPECIAL_TYPES[:winner]}0"] if final?
+        return if final || left_final?
 
         tournament.rounds["#{type}#{number.next}"]
       end
