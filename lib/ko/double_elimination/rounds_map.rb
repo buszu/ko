@@ -20,8 +20,7 @@ module Ko
       def sorted_keys(order = :display)
         case order
         when :display
-          comparator = method(:display_sort_comparator)
-          keys.sort_by(&comparator)
+          sorted_keys_for_display
         when :running
           sorted_keys_for_running
         else
@@ -30,6 +29,13 @@ module Ko
       end
 
       private
+
+      def sorted_keys_for_display
+        return @sorted_keys_for_display if sorted_keys_for_display
+
+        comparator = method(:display_sort_comparator)
+        @sorted_keys_for_display = keys.sort_by(&comparator)
+      end
 
       def display_sort_comparator(key)
         round = get(key)
@@ -40,6 +46,8 @@ module Ko
       # rubocop:todo Metrics/AbcSize
       # rubocop:todo Metrics/MethodLength
       def sorted_keys_for_running
+        return @sorted_keys_for_running if sorted_keys_for_running
+
         rounds_by_type = values.each_with_object(
           {
             Round::LEFT_SIDE_IDENTIFIER => [],
@@ -63,7 +71,7 @@ module Ko
           end
         end
 
-        sorted_keys
+        @sorted_keys_for_running = sorted_keys
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
