@@ -4,6 +4,7 @@ require 'ko/double_elimination/round'
 require 'ko/double_elimination/rounds_map'
 require 'ko/double_elimination/match'
 require 'ko/double_elimination/matches_queue'
+require 'ko/double_elimination/fixed/tournament'
 
 module Ko
   module DoubleElimination
@@ -70,6 +71,53 @@ module Ko
 
       def matches_queue
         @matches_queue ||= MatchesQueue.new(self)
+      end
+
+      def to_fixed_tournament
+        Fixed::Tournament.new(self)
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      def as_json
+        {
+          size: size,
+          finals: FINALS[size],
+          matches_graph: matches_graph,
+          matches_queue: {
+            by_position: matches_queue_keys(:by_position),
+            by_key: matches_queue_keys(:by_key)
+          },
+          rounds: {
+            for_display: rounds.sorted_keys(:display),
+            for_running: rounds.sorted_keys(:running)
+          }
+        }
+      end
+      # rubocop:enable Metrics/MethodLength
+
+      private
+
+      def matches_graph
+        rounds.values.flat_map do |round|
+          round.matches.values.map do |match|
+            [
+              match.to_s,
+              { next_won: match.next.to_s,
+                next_lost: match.next(won: false).to_s }
+            ]
+          end
+        end.to_h
+      end
+
+      def matches_queue_keys(by)
+        case by
+        when :by_position
+          matches_queue.by_position.transform_values do |match_in_queue|
+            match_in_queue.match.to_s
+          end
+        when :by_key
+          matches_queue.by_key.transform_values(&:position)
+        end
       end
     end
   end
