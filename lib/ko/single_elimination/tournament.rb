@@ -28,6 +28,8 @@ module Ko
       attr_accessor :final, :left_final
 
       def initialize(size:)
+        raise invalid_size(size) unless FINALS.keys.include?(size)
+
         @size = size
         @rounds = RoundsMap.new
         @final = nil
@@ -72,6 +74,10 @@ module Ko
         when :by_key
           matches_queue.by_key.transform_values(&:position)
         end
+      end
+
+      def invalid_size(size)
+        raise(ArgumentError, "Size #{size} is invalid. Valid sizes: #{FINALS.keys}")
       end
     end
   end

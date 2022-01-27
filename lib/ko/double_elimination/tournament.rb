@@ -4,7 +4,6 @@ require 'ko/double_elimination/round'
 require 'ko/double_elimination/rounds_map'
 require 'ko/double_elimination/match'
 require 'ko/double_elimination/matches_queue'
-require 'ko/double_elimination/fixed/tournament'
 
 module Ko
   module DoubleElimination
@@ -63,6 +62,8 @@ module Ko
       attr_accessor :final, :left_final
 
       def initialize(size:)
+        raise invalid_size(size) unless FINALS.keys.include?(size)
+
         @size = size
         @rounds = RoundsMap.new
         @final = nil
@@ -71,10 +72,6 @@ module Ko
 
       def matches_queue
         @matches_queue ||= MatchesQueue.new(self)
-      end
-
-      def to_fixed_tournament
-        Fixed::Tournament.new(self)
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -118,6 +115,10 @@ module Ko
         when :by_key
           matches_queue.by_key.transform_values(&:position)
         end
+      end
+
+      def invalid_size(size)
+        raise(ArgumentError, "Size #{size} is invalid. Valid sizes: #{FINALS.keys}")
       end
     end
   end
