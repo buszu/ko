@@ -102,8 +102,8 @@ module Ko
           round.matches.values.map do |match|
             [
               match.to_s,
-              { next_won: match.next.to_s,
-                next_lost: match.next(won: false).to_s }
+              { next_won: match.next&.to_s,
+                next_lost: match.next(won: false)&.to_s }
             ]
           end
         end.to_h

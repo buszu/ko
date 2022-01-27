@@ -60,10 +60,12 @@ module Ko
 
         while i > 1
           round = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
+
           if round_matches_count >= 1
             generate_round_matches(round)
             round_matches_count /= 2
           end
+
           tournament.rounds[round.key] = round
           rounds << round
 
