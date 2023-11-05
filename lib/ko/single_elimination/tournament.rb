@@ -41,9 +41,9 @@ module Ko
 
       def as_json
         {
-          size: size,
+          size:,
           finals: FINALS[size],
-          matches_graph: matches_graph,
+          matches_graph:,
           matches_queue: {
             by_position: matches_queue_keys(:by_position),
             by_key: matches_queue_keys(:by_key)

@@ -5,7 +5,7 @@ module Ko
     class Round
       RIGHT_SIDE_IDENTIFIER = 'w'
       LEFT_SIDE_IDENTIFIER = 'l'
-      INITIAL_ROUND_KEY = "#{RIGHT_SIDE_IDENTIFIER}1"
+      INITIAL_ROUND_KEY = "#{RIGHT_SIDE_IDENTIFIER}1".freeze
 
       attr_reader :tournament, :type, :number, :matches
 
@@ -29,10 +29,10 @@ module Ko
         return 1 if final?
 
         if winners?
-          tournament.size / 2**(number - 1)
+          tournament.size / (2**(number - 1))
         else
           modified_number = (number.to_f / 2).ceil
-          tournament.size / 2**(modified_number - 1) / 2
+          tournament.size / (2**(modified_number - 1)) / 2
         end
       end
       # rubocop:enable Metrics/AbcSize

@@ -21,7 +21,7 @@ module Ko
       private
 
       def generate_initial_round(tournament)
-        initial_round = Round.new(number: 1, tournament: tournament)
+        initial_round = Round.new(number: 1, tournament:)
         generate_round_matches(initial_round)
         tournament.rounds[initial_round.key] = initial_round
       end
@@ -34,7 +34,7 @@ module Ko
         round_number = 2
 
         while i > 1
-          round = Round.new(number: round_number, tournament: tournament)
+          round = Round.new(number: round_number, tournament:)
 
           if round_matches_count >= 1
             generate_round_matches(round)
@@ -58,7 +58,7 @@ module Ko
       def generate_round_matches(round)
         round.matches_count.times do |t|
           number = t.succ
-          match = Match.new(round: round, number: number)
+          match = Match.new(round:, number:)
           round.matches[number] = match
         end
       end

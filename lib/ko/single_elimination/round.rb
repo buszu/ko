@@ -4,7 +4,7 @@ module Ko
   module SingleElimination
     class Round
       RIGHT_SIDE_IDENTIFIER = 'w'
-      INITIAL_ROUND_KEY = "#{RIGHT_SIDE_IDENTIFIER}1"
+      INITIAL_ROUND_KEY = "#{RIGHT_SIDE_IDENTIFIER}1".freeze
 
       attr_reader :tournament, :type, :number, :matches
 
@@ -26,7 +26,7 @@ module Ko
       def matches_count
         return 1 if final?
 
-        tournament.size / 2**(number - 1)
+        tournament.size / (2**(number - 1))
       end
 
       def initial?

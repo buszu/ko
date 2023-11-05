@@ -22,7 +22,7 @@ module Ko
       private
 
       def generate_initial_round(tournament)
-        initial_round = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: 1, tournament: tournament)
+        initial_round = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: 1, tournament:)
         generate_round_matches(initial_round)
         tournament.rounds[initial_round.key] = initial_round
       end
@@ -35,7 +35,7 @@ module Ko
 
         while round_matches_count >= 1
           2.times do
-            round = Round.new(type: Round::LEFT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
+            round = Round.new(type: Round::LEFT_SIDE_IDENTIFIER, number: round_number, tournament:)
             generate_round_matches(round)
             tournament.rounds[round.key] = round
             rounds << round
@@ -59,7 +59,7 @@ module Ko
         round_number = 2
 
         while i > 1
-          round = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
+          round = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: round_number, tournament:)
 
           if round_matches_count >= 1
             generate_round_matches(round)
@@ -73,7 +73,7 @@ module Ko
           i /= 2
         end
 
-        final = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: round_number, tournament: tournament)
+        final = Round.new(type: Round::RIGHT_SIDE_IDENTIFIER, number: round_number, tournament:)
         tournament.final = final
         generate_round_matches(final)
         tournament.rounds[final.key] = final
@@ -85,7 +85,7 @@ module Ko
       def generate_round_matches(round)
         round.matches_count.times do |t|
           number = t.succ
-          match = Match.new(round: round, number: number)
+          match = Match.new(round:, number:)
           round.matches[number] = match
         end
       end

@@ -28,7 +28,7 @@ module Ko
       end
 
       def next_number
-        number.even? ? number / 2 : number / 2 + 1
+        number.even? ? number / 2 : (number / 2) + 1
       end
     end
   end
